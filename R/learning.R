@@ -131,9 +131,45 @@ nhanes_modified <- nhanes_small %>% # Specifying dataset
         # 2. Calculate mean arterial pressure
         art_pre_mean = (((2*bp_sys_ave) + bp_sys_ave)/3),
         # 3. Create young_child variable using a condition
-        young_child = if_else(age <= 6, "Yes", "No")
+        young_child = if_else(age < 6, "Yes", "No")
     )
 
 nhanes_modified
+
+
+# Creating summary statistics ---------------------------------------------
+nhanes_small %>%
+    summarise(max_bmi = max(bmi))
+
+nhanes_small %>%
+    summarise(max_bmi = max(bmi, na.rm = TRUE))
+
+nhanes_small %>%
+    summarise(max_bmi = max(bmi, na.rm = TRUE),
+              min_bmi = min(bmi, na.rm = TRUE))
+
+bmi_summary <- nhanes_small %>%
+    summarise(max_bmi = max(bmi, na.rm = TRUE),
+              min_bmi = min(bmi, na.rm = TRUE))
+
+bmi_summary
+
+nhanes_small %>%
+    group_by(diabetes) %>%
+    summarise(mean_age = mean(age, na.rm = TRUE),
+              mean_bmi = mean(bmi, na.rm = TRUE)
+              )
+
+nhanes_small %>%
+    filter(!is.na(diabetes)) %>%
+    group_by(diabetes) %>%
+    summarise(mean_age = mean(age, na.rm = TRUE),
+              mean_bmi = mean(bmi, na.rm = TRUE)
+    ) %>%
+    ungroup()
+
+
+# Saving Data -------------------------------------------------------------
+readr::write_csv(nhanes_small, here::here("data/nhanes_small.csv"))
 
 
