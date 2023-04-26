@@ -1,4 +1,4 @@
-Kamilla H. Hejn
+Kamilla Holtmann Hejn
 Translational Biology
 
 Day 2, added this sentence locally
