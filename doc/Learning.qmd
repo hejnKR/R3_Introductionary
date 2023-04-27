@@ -2,6 +2,7 @@
 title: "Reproducible documents"
 author: Kamilla H. Hejn
 format: html
+theme: yeti
 ---
 
 ```{r}
@@ -75,4 +76,8 @@ nhanes_small %>%
   ) %>% 
   knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
 ```
+
+Image of a toller puppy at the beach @fig-toller.
+
+![Toller](images/toller.jpg){#fig-toller width="50%" height="50%"}
 
