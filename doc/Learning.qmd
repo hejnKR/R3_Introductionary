@@ -6,7 +6,7 @@ theme: yeti
 ---
 
 ```{r}
-2+2
+2 + 2
 ```
 
 ```{r setup}
@@ -66,14 +66,14 @@ nhanes_small %>%
     mean_bmi = round(mean_bmi, 1),
     # Task 2b.
     education = str_to_sentence(education)
-  ) %>% 
+  ) %>%
   rename(
     # Task 3.
     "Diabetes Status" = diabetes,
     "Edcuation" = education,
     "Mean Age" = mean_age,
     "Mean BMI" = mean_bmi
-  ) %>% 
+  ) %>%
   knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
 ```
 
@@ -81,3 +81,79 @@ Image of a toller puppy at the beach @fig-toller.
 
 ![Toller](images/toller.jpg){#fig-toller width="50%" height="50%"}
 
+## Data Visualization
+
+```{r}
+# Create histogram for BMI
+ggplot(nhanes_small, aes(x = bmi)) +
+  geom_histogram()
+```
+
+```{r}
+# Create histogram for BMI
+ggplot(nhanes_small, aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE) # rm missing values
+```
+
+```{r}
+# Create histogram for BMI
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram()
+```
+```{r}
+#| fig-cap: "Distribution of BMI"
+#| label: fig-bmi-histo
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE)
+```
+
+BMI distribution in NHANES dataset was visualised in @fig-bmi-histo.
+
+```{r}
+# Create count barplot for education
+ggplot(nhanes_small, aes(x = education)) +
+  geom_bar()
+```
+
+```{r}
+# Create count barplot for diabetes status
+ggplot(nhanes_small, aes(x = diabetes)) +
+  geom_bar()
+```
+
+```{r}
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  ggplot(aes(x = diabetes)) +
+  geom_bar()
+```
+
+```{r}
+nhanes_small %>%
+  filter(!is.na(education)) %>%
+  ggplot(aes(x = education)) +
+  geom_bar()
+```
+
+```{r}
+#| label: fig-diabetes-education
+#| fig-cap: "Counts of diabetes and education in NHANES"
+#| fig-subcap:
+#|   - "Number of those with or without diabetes"
+#|   - "Number of those with differnet educations"
+#| layout-ncol: 2
+
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  ggplot(aes(x = diabetes)) +
+  geom_bar()
+
+nhanes_small %>%
+  filter(!is.na(education)) %>%
+  ggplot(aes(x = education)) +
+  geom_bar()
+```
